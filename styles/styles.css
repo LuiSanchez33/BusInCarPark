@@ -1,0 +1,18 @@
+svg {
+	border: 1px solid blue;
+}
+
+.form{
+  
+}
+
+.command-button{
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 2px;
+  border: none;
+  font-size: 1em;
+  color:white;
+  background: #101010;
+}
+
