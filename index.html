@@ -9,15 +9,28 @@
   <script src="main.js"></script>
   <script src="js/class/grid.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="styles/styles.css" </head>
+  <link rel="stylesheet" type="text/css" href="css/styles.css" </head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
   <body onload='main();'>
-
-    <div class="grid"></div>
-    <form class="form">
-      <input type="text" placeholder="Enter command here" style="flex: 110%;">
-      <button type="submit" class="command-button">Execute</button>
-    </form>
+    <header class="header">
+      <p class="w100 text-center">ACCORDO</p>
+    </header>
+    <div class="container w100 text-center">
+      <div class="grid col-8"></div>
+      <form class="form col-4">
+        <input type="text" placeholder="Enter command here" style="flex: 110%;">
+        <button type="submit" class="command-button">Execute</button>
+      </form>
+    </div>
+    <footer class="foot">
+      <p class="w100 text-center">Posted by: Luis Sánchez</p>
+      <p class="w100 text-center">Contact information:
+        <a href="mailto:lsanchezalzamora@gmail.com">
+          lsanchezalzamora@gmail.com</a>
+      </p>
+    </footer>
 
   </body>
 

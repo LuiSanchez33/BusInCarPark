@@ -1,0 +1,30 @@
+body{
+  
+}
+svg {
+	border: 1px solid blue;
+}
+
+.form{
+  
+}
+
+.command-button{
+  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 2px;
+  border: none;
+  font-size: 1em;
+  color:white;
+  background: #101010;
+}
+
+.header {
+	background-color: #101010;
+	color: white;
+}
+
+.foot {
+	background-color: #1b3f6e;
+	color: white;
+}
