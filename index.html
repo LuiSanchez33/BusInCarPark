@@ -21,8 +21,9 @@
     <div class="container w100 text-center">
       <div class="grid col-8"></div>
       <form class="form col-4">
-        <input type="text" placeholder="Enter command here" style="flex: 110%;">
-        <button type="submit" class="command-button">Execute</button>
+        <input type="text" id="txtCommand" placeholder="Enter command here" style="flex: 110%;">
+        <input type="button" id="btnCommand" class="command-button" value="Execute" onClick="readKey()" />
+        <div id="status"></div>
       </form>
     </div>
     <footer class="foot">

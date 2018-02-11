@@ -5,9 +5,10 @@ function bus(x, y, rows, width, height, direction) {
   this.width = width;
   this.height = height;
   this.direction = direction;
+  this.isValidMove = false;
 
   function validateValues(NewX, NewY, NewDirection) {
-    if (NewX != null && NewY != null && NewDirection != null) {
+    if (NewX !== null && NewY !== null && NewDirection !== null) {
       return true;
     } else {
       return false;
@@ -15,16 +16,56 @@ function bus(x, y, rows, width, height, direction) {
   }
 
   this.setvalues = function (NewX, NewY, NewDirection) {
-    if (validateValues) {
-      this.x = NewX;
-      this.y = NewY;
-      this.direction = NewDirection;
+    //if (validateValues) {
+    this.x = NewX;
+    this.y = NewY;
+    this.direction = NewDirection;
+    this.isInitialized = true;
+    this.isValidMove = true;
+    //}
+  }
+
+
+  this.move = function () {
+    var pos = { x: this.x, y: this.y, direction: this.direction };
+
+    switch (pos.direction) {
+      case ROUTE.EAST:
+        pos.x++; break;
+      case ROUTE.NORTH:
+        pos.y++; break;
+      case ROUTE.WEST:
+        pos.x--; break;
+      case ROUTE.SOUTH:
+        pos.y--; break;
     }
+
+    this.isValidMove = pos.x >= 0 && pos.y >= 0 && pos.x < this.rows && pos.y < this.rows;
+
+    if (this.isValidMove) {
+
+      this.x = pos.x;
+      this.y = pos.y;
+    }
+  }
+
+  this.left = function () {
+    var val = this.direction;
+    var newVal = (val + 3) % 4;
+    this.direction = newVal;
+    this.isValidMove = true;
+  }
+
+  this.right = function () {
+    var val = this.direction;
+    var newVal = (val + 1) % 4;
+    this.direction = newVal;
+    this.isValidMove = true;
   }
 
   this.report = function () {
     var dir = ["EAST", "SOUTH", "WEST", "NORTH"];
-    console.log("x: " + x + " y: " + y + " direction:" + dir[direction]);
+    console.log("x: " + this.x + " y: " + this.y + " direction:" + dir[this.direction]);
   }
 
   this.draw = function () {
@@ -69,8 +110,12 @@ function bus(x, y, rows, width, height, direction) {
         break;
     }
 
-    console.log(busContainer);
-    busContainer.selectAll("path").style({ "fill": "blue" });
+    //console.log(busContainer);
+    if (!this.isValidMove) {
+      busContainer.selectAll("path").style({ "fill": "red", "stroke": "blue", "stroke-width": 1 });
+    } else {
+      busContainer.selectAll("path").style({ "fill": "blue" });
+    }
 
   }
 
