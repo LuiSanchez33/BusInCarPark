@@ -82,6 +82,7 @@ svg {
 }
 
 .foot {
+	margin: 10px;
 	background-color: #1b3f6e;
 	color: white;
 }
