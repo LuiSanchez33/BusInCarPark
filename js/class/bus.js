@@ -117,24 +117,24 @@ function bus(x, y, rows, width, height, direction) {
     var command = splitKey(myCommand).command;
     var params = splitKey(myCommand).params;
     if (command === "")
-      err = "No command.";
+      err = "Empty";
     if (!this.isInitialized) {
       if (validFirstCommands.indexOf(command.toUpperCase()) < 0)
-        err = "Not a valid first command. Bus needs to be placed on platform first";
+        err = "It isn't the first command.Please press the command PLACE";
     }
     if (validFirstCommands.indexOf(command.toUpperCase()) < 0) {
       if (validCommands.indexOf(command.toUpperCase()) < 0 || params.length != 1)
-        err = "Not a valid command";
+        err = "It isn't a valid command";
     } else {
       if (params.length != 3)
-        err = "Not a valid command";
+        err = "It isn't a valid command";
       else {
         if (ROUTE[params[2].trim().toUpperCase()] === undefined)
-          err = "Not a valid direction";
+          err = "It isn't a valid direction";
         if (params[0] != parseInt(params[0], 10) || params[0] != parseInt(params[0], 10))
-          err = "Not valid coordinates";
+          err = "It isn't a valid coordinates";
         if ((params[0] > this.rows - 1) || (params[1] > this.rows - 1))
-          err = "Not valid coordinates";
+          err = "It isn't a valid coordinates";
       }
     }
     //this.cmd = { command: command, params: params };

@@ -1,13 +1,68 @@
-body{
-  
+h1{
+  margin: 20px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 4px;
+  line-height: 40px;
+  vertical-align: middle;
+  font-family: sans-serif;
 }
+
+a{
+  font-size: 20px;
+  line-height: 40px;
+  font-family: sans-serif;
+  padding-right: 60px;
+}
+
 svg {
 	border: 1px solid blue;
 }
 
-.form{
+.grid{
+  margin: 20px;
+}
+
+.logo{
+  margin: 20px;
+  height: 66px;
+  width: 188px;
+  background-image: url(../img/accordo.jpg);
+  background-repeat: no-repeat;
+  flex:3;
   
 }
+
+.boxlogo{
+  background-color:white;
+}
+
+.testing{
+  flex:1;
+  background-color: #1b3f6e;
+  color:white;
+}
+
+
+.mocha{
+  margin-left: auto;
+	margin-right: auto;
+	display: block;
+  background-color: #1b3f6e;
+  height: 113px;
+  width: 180px;
+  background-image: url(../img/mocha.png);
+  background-repeat: no-repeat;
+  
+  flex:3;
+}
+
+.medio{
+  background-color: #1b3f6e;
+  color:white;
+  flex:6;
+}
+
 
 .command-button{
   font-weight: bold;
@@ -20,8 +75,10 @@ svg {
 }
 
 .header {
-	background-color: #101010;
-	color: white;
+  
+  background-color: #101010;
+  color: white;
+  display: flex;
 }
 
 .foot {
