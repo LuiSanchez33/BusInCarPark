@@ -65,7 +65,7 @@ function bus(x, y, rows, width, height, direction) {
 
   this.report = function () {
     var dir = ["EAST", "SOUTH", "WEST", "NORTH"];
-    console.log("x: " + this.x + " y: " + this.y + " direction:" + dir[this.direction]);
+    alert("x: " + this.x + " y: " + this.y + " direction:" + dir[this.direction]);
   }
 
   this.draw = function () {

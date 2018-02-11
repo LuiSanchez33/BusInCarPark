@@ -17,8 +17,18 @@ function main() {
   // Draw Grid
   MyGrid.init();
 
+  //Draw Bus
+  //MyBus.draw(); //rows:5,width:60,weigth:60
+
+  //Draw Report
+  //MyBus.report();
+
+  //readKey();
+
+
   this.readKey = function () {
     let key = $("#txtCommand").val();
+    //string = key;
     this.executeKey(key);
     cleanCarPark();
   }
