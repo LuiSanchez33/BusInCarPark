@@ -6,6 +6,8 @@ function bus(x, y, rows, width, height, direction) {
   this.height = height;
   this.direction = direction;
   this.isValidMove = false;
+  this.isInitialized = false;
+  this.validateKey;
 
   function validateValues(NewX, NewY, NewDirection) {
     if (NewX !== null && NewY !== null && NewDirection !== null) {
@@ -15,57 +17,130 @@ function bus(x, y, rows, width, height, direction) {
     }
   }
 
+  function validateMoves(x, y, rows) {
+    if (x >= 0 && y >= 0 && x < rows && y < rows)
+      return true;
+    else
+      return false;
+  }
+
   this.setvalues = function (NewX, NewY, NewDirection) {
-    //if (validateValues) {
-    this.x = NewX;
-    this.y = NewY;
-    this.direction = NewDirection;
-    this.isInitialized = true;
-    this.isValidMove = true;
-    //}
+    if (validateValues(NewX, NewY, NewDirection)) {
+      this.x = NewX;
+      this.y = NewY;
+      this.direction = NewDirection;
+      this.isInitialized = true;
+      this.isValidMove = true;
+    }
   }
 
 
   this.move = function () {
-    var pos = { x: this.x, y: this.y, direction: this.direction };
+    if (this.isInitialized) {
+      var pos = { x: this.x, y: this.y, direction: this.direction };
+      switch (pos.direction) {
+        case ROUTE.EAST:
+          pos.x++; break;
+        case ROUTE.NORTH:
+          pos.y++; break;
+        case ROUTE.WEST:
+          pos.x--; break;
+        case ROUTE.SOUTH:
+          pos.y--; break;
+      }
 
-    switch (pos.direction) {
-      case ROUTE.EAST:
-        pos.x++; break;
-      case ROUTE.NORTH:
-        pos.y++; break;
-      case ROUTE.WEST:
-        pos.x--; break;
-      case ROUTE.SOUTH:
-        pos.y--; break;
-    }
 
-    this.isValidMove = pos.x >= 0 && pos.y >= 0 && pos.x < this.rows && pos.y < this.rows;
-
-    if (this.isValidMove) {
-
-      this.x = pos.x;
-      this.y = pos.y;
+      this.isValidMove = validateMoves(pos.x, pos.y, this.rows);
+      if (this.isValidMove) {
+        this.x = pos.x;
+        this.y = pos.y;
+      }
     }
   }
 
   this.left = function () {
-    var val = this.direction;
-    var newVal = (val + 3) % 4;
-    this.direction = newVal;
-    this.isValidMove = true;
+    if (this.isInitialized) {
+      var val = this.direction;
+      var newVal = (val + 3) % 4;
+      this.direction = newVal;
+      this.isValidMove = true;
+    }
   }
 
   this.right = function () {
-    var val = this.direction;
-    var newVal = (val + 1) % 4;
-    this.direction = newVal;
-    this.isValidMove = true;
+    if (this.isInitialized) {
+      var val = this.direction;
+      var newVal = (val + 1) % 4;
+      this.direction = newVal;
+      this.isValidMove = true;
+    }
   }
 
   this.report = function () {
-    var dir = ["EAST", "SOUTH", "WEST", "NORTH"];
-    alert("x: " + this.x + " y: " + this.y + " direction:" + dir[this.direction]);
+    if (this.isInitialized) {
+      var dir = ["EAST", "SOUTH", "WEST", "NORTH"];
+      alert("x: " + this.x + " y: " + this.y + " direction:" + dir[this.direction]);
+    }
+  }
+
+
+  function splitKey(myKey) {
+    myKey = myKey.trim();
+    var ind = myKey.trim().indexOf(' ');
+    var command = myKey.toUpperCase();
+    if (ind > 0)
+      command = myKey.substr(0, ind + 1).trim().toUpperCase();
+    var params = myKey.substr(ind + 1).replace(/\s\s+/g, '').trim().split(",");
+    return { command: command, params: params };
+  }
+
+  this.validatePlace = function (cmd) {
+    if (cmd.toUpperCase() == "PLACE 0,0,NORTH")
+      return 1;
+    else
+      return 0;
+
+  }
+
+  this.validateNull = function (cmd) {
+    if (cmd !== null && cmd == "MOVE")
+      return true;
+    else return null;;
+  }
+
+  this.validateKey = function (cmd) {
+    var validCommands = ["PLACE", "MOVE", "LEFT", "RIGHT", "REPORT"];
+    var validFirstCommands = ["PLACE"];
+    if (cmd !== undefined)
+      myCommand = cmd;
+    var err = "";
+    var command = splitKey(myCommand).command;
+    var params = splitKey(myCommand).params;
+    if (command === "")
+      err = "No command.";
+    if (!this.isInitialized) {
+      if (validFirstCommands.indexOf(command.toUpperCase()) < 0)
+        err = "Not a valid first command. Bus needs to be placed on platform first";
+    }
+    if (validFirstCommands.indexOf(command.toUpperCase()) < 0) {
+      if (validCommands.indexOf(command.toUpperCase()) < 0 || params.length != 1)
+        err = "Not a valid command";
+    } else {
+      if (params.length != 3)
+        err = "Not a valid command";
+      else {
+        if (ROUTE[params[2].trim().toUpperCase()] === undefined)
+          err = "Not a valid direction";
+        if (params[0] != parseInt(params[0], 10) || params[0] != parseInt(params[0], 10))
+          err = "Not valid coordinates";
+        if ((params[0] > this.rows - 1) || (params[1] > this.rows - 1))
+          err = "Not valid coordinates";
+      }
+    }
+    //this.cmd = { command: command, params: params };
+    if (err != "")
+      err = "<span style='color:red'>" + err + "</span>"
+    return err;
   }
 
   this.draw = function () {
@@ -116,10 +191,6 @@ function bus(x, y, rows, width, height, direction) {
     } else {
       busContainer.selectAll("path").style({ "fill": "blue" });
     }
-
-  }
-
-  function directionNorth() {
 
   }
 

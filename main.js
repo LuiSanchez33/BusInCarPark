@@ -10,28 +10,30 @@ function main() {
   let cells = 5; //5x5
   let width = 60;
   let height = 60;
-  let direction = 3
+  let direction = -1
   let MyGrid = new grid('.grid', cells, cells, width, height);
-  let MyBus = new bus(1, 1, cells, width, height, direction); //direction noth=3
+  let MyBus = new bus(1, 4, cells, width, height, direction); //direction noth=3
 
   // Draw Grid
   MyGrid.init();
 
-  //Draw Bus
-  //MyBus.draw(); //rows:5,width:60,weigth:60
-
-  //Draw Report
-  //MyBus.report();
-
-  //readKey();
-
-
   this.readKey = function () {
     let key = $("#txtCommand").val();
+    //myCommand.setCommand(strCommand);
     //string = key;
-    this.executeKey(key);
+    var commandCheck = MyBus.validateKey(key);
+    if (commandCheck != "") {
+      $("#status").html(commandCheck);
+      return;
+    } else {
+      $("#status").html("");
+      this.executeKey(key);
+    }
     cleanCarPark();
+
   }
+
+
 
   this.executeKey = function (key) {
     d3.select('.grid').selectAll("path").remove();
@@ -56,7 +58,9 @@ function main() {
         MyBus.report();
         break;
     }
-    MyBus.draw();
+    if (MyBus.isInitialized) {
+      MyBus.draw();
+    }
   }
 
 }
@@ -75,3 +79,11 @@ function splitKey(myKey) {
 function cleanCarPark() {
   $("#txtCommand").val('');
 }
+
+function keypress(e) {
+  if (e.which == 13) {  //ENTER
+    $('#btnCommand').trigger("click");
+    e.preventDefault();
+  }
+
+};
